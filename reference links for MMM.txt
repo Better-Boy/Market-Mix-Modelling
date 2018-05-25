@@ -1,0 +1,11 @@
+https://rpubs.com/rohitdhankaranalytics/Marketing-Mix-Modeling
+http://www.datasciencecentral.com/profiles/blogs/marketing-measurement-analytics-is-changing-the-mix
+http://www.analyticbridge.datasciencecentral.com/forum/topics/attribution-modeling-vs-market-mix-modeling
+https://stats.stackexchange.com/questions/9836/market-mix-modelling-with-r
+https://analyticsartist.wordpress.com/2014/08/17/marketing-mix-modeling-explained-with-r/
+https://www.r-bloggers.com/marketing-mix-lab-multicollinearity-and-ridge-regression/
+http://analyzecore.com/2016/08/03/attribution-model-r-part-1/
+https://www.decisionanalyst.com/whitepapers/marketingmixmodeling/
+https://www.youtube.com/playlist?list=PLSjoiYsfq0uFzpKVVbGwiQ-Dpl_6nhEmh - List of videos
+https://www.quora.com/Marketing-mix-modelling-What-are-the-best-and-most-practical-statistical-techniques-to-use-for-MMM
+http://www.nielsen.com/de/de/solutions/capabilities/marketing-mix-modeling.html

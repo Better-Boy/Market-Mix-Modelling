@@ -1,0 +1,93 @@
+---
+title: "Marketing Mix Models"
+author: "Abhilash K R"
+date: "2 June 2017"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Implementation of MMM in R:
+
+The data we consider here is the dataset used in Chpater 9 of the book 'Cutting-Edge Marketing Analytics: Real World Cases and Data Sets for Hands On Learning'. The data set is available to download from www.dmanalytics.org.
+
+Importing data
+
+``` {r echo = TRUE}
+library(xlsx)
+data = read.xlsx('MMM.xlsx',sheetIndex = 1)
+head(data)
+length(unique(data$BrandName))
+attach(data)
+```
+
+
+This data set includes a total of 27 brands of vodka manufacturing companies. For MMM, let's choose a brand and analyse the impact of Price on sales. For instance, let's choose 'Finlandia' as the brand for our analysis.
+
+
+```{r}
+Finlandia = subset(data,BrandName == 'Finlandia')
+dim(Finlandia)
+print(Finlandia)
+```
+
+There are a lot of columns not of our interest. Let's filter them out.
+
+```{r}
+Pr_Finlandia = data.frame(Finlandia$LnSales,Finlandia$LnPrice)
+names(Pr_Finlandia) = c('LnSales','LnPrice')
+Pr_Finlandia
+```
+
+In order to find the impact of Price on sales,let's build a regression model on the dataset. First let's plot some graphs to understand the data points.
+
+```{r}
+plot( x = Pr_Finlandia$LnPrice,y = Pr_Finlandia$LnSales,xlab = 'Log Price',ylab = 'Log Sales')
+```
+
+We can infer that price variation is almost linear in nature with sales with outliers.
+
+We can remove the outliers and therefore fit out regression line.
+
+```{r}
+Pr_Finlandia = subset(Pr_Finlandia,LnPrice < 4.95)
+plot( x = Pr_Finlandia$LnPrice,y = Pr_Finlandia$LnSales,xlab = 'Log Price',ylab = 'Log Sales')
+```
+
+Linear Regression :
+
+```{r}
+result = lm(formula = 'LnSales ~ LnPrice',data = Pr_Finlandia)
+summary(result)
+```
+
+Here, the p-value of price is almost zero that indicates that price is significant indicator of sales.
+Here, the value of R-squared is 0.768 i.e the price variable indicates nearly 77% of the data points. The co-efficient of price tells that for every unit increase in price, there is 2.31 times increase in sales.
+Let's add more variables to the regression and see what happens with the R-squared.
+
+```{r}
+Ad_Finlandia = subset(Finlandia,select = c('LnSales','LnMag','LnNews','LnOut','LnBroad','LnPrint','LnPrice'))
+dim(Ad_Finlandia)
+Ad_Finlandia
+```
+
+```{r}
+result_ad = lm(formula ='LnSales ~ LnMag + LnNews + LnOut + LnBroad + LnPrint + LnPrice',data=Ad_Finlandia)
+summary(result_ad)
+```
+
+The R-squared value has decreased. Here the p-values of some variables are high which can be accounted due to interaction effect and some other factors.
+Let's try out the interation effect method between variables broad and print
+
+```{r}
+result_inter = lm('LnSales ~ LnMag + LnNews + LnOut * LnBroad + LnPrint + LnPrice',data=Ad_Finlandia)
+summary(result_inter)
+```
+
+Boom! The results here are surprised. The presence of significant interaction indicates that the effect of one predictor variable on the response variable is different at different values of the other predictor variable. Therefore,the individial effects of the predictors also include the effects of the co-efficients of the interaction terms.
+
+The R-squared value has also increased indicating the model can explain most of the data points now.
